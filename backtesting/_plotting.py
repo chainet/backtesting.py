@@ -442,7 +442,7 @@ return this.labels[index] || "";
         resample_rule = (superimpose if isinstance(superimpose, str) else
                          dict(day='M',
                               hour='D',
-                              minute='H',
+                              minute='h',
                               second='T',
                               millisecond='S').get(time_resolution))
         if not resample_rule:
@@ -561,7 +561,7 @@ return this.labels[index] || "";
                         fig.vbar('index', BAR_WIDTH, source_name, source=source,
                                  legend_label=legend_label, color=color)
                     elif is_scatter:
-                        fig.scatter(
+                        fig.circle(
                             'index', source_name, source=source,
                             legend_label=legend_label, color=color,
                             line_color='black', fill_alpha=.8,
@@ -576,7 +576,7 @@ return this.labels[index] || "";
                         r = fig.vbar('index', BAR_WIDTH, source_name, source=source,
                                      legend_label=LegendStr(legend_label), color=color)
                     elif is_scatter:
-                        r = fig.scatter(
+                        r = fig.circle(
                             'index', source_name, source=source,
                             legend_label=LegendStr(legend_label), color=color,
                             marker='circle', radius=BAR_WIDTH / 2 * .9)
