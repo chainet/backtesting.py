@@ -564,8 +564,7 @@ return this.labels[index] || "";
                         fig.circle(
                             'index', source_name, source=source,
                             legend_label=legend_label, color=color,
-                            line_color='black', fill_alpha=.8,
-                            marker='circle', radius=BAR_WIDTH / 2 * 1.5)
+                            line_color='black', fill_alpha=.8, radius=BAR_WIDTH / 2 * 1.5)
                     else:
                         fig.line(
                             'index', source_name, source=source,
@@ -578,8 +577,7 @@ return this.labels[index] || "";
                     elif is_scatter:
                         r = fig.circle(
                             'index', source_name, source=source,
-                            legend_label=LegendStr(legend_label), color=color,
-                            marker='circle', radius=BAR_WIDTH / 2 * .9)
+                            legend_label=LegendStr(legend_label), color=color, radius=BAR_WIDTH / 2 * .9)
                     else:
                         r = fig.line(
                             'index', source_name, source=source,
