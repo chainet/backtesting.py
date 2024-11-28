@@ -27,6 +27,7 @@ from bokeh.models import (  # type: ignore
     DatetimeTickFormatter,
     WheelZoomTool,
     LinearColorMapper,
+    GlobalInlineStyleSheet
 )
 try:
     from bokeh.models import CustomJSTickFormatter
@@ -196,7 +197,7 @@ def plot(*, results: pd.Series,
 
     from .lib import OHLCV_AGG
     # ohlc df may contain many columns. We're only interested in, and pass on to Bokeh, these
-    df = df[list(OHLCV_AGG.keys())].copy(deep=False)
+    df = df[list(OHLCV_AGG.keys())+['History']].copy(deep=False)
 
     # Limit data to max_candles
     if is_datetime_index:
@@ -266,7 +267,8 @@ return this.labels[index] || "";
                             '@High{0,0.0[0000]}',
                             '@Low{0,0.0[0000]}',
                             '@Close{0,0.0[0000]}'))),
-        ('Volume', '@Volume{0,0}')]
+        ('Volume', '@Volume{0,0}'),
+        ('History', '@History')]
 
     def new_indicator_figure(**kwargs):
         kwargs.setdefault('height', 90)
@@ -680,6 +682,11 @@ return this.labels[index] || "";
         merge_tools=True,
         **kwargs  # type: ignore
     )
+    fig.stylesheets = [GlobalInlineStyleSheet(css='''
+        div.bk-Tooltip {
+            white-space: pre-wrap;
+        }
+    ''')]
     show(fig, browser=None if open_browser else 'none')
     return fig
 
