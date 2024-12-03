@@ -178,7 +178,7 @@ def plot(*, results: pd.Series,
         filename = _windos_safe_filename(str(results._strategy))
     _bokeh_reset(filename)
 
-    BEAR_COLOR = RGB(227, 59, 84)
+    BEAR_COLOR = RGB(246, 70, 93)
     BULL_COLOR = RGB(46, 189, 133)
     COLORS = [BEAR_COLOR, BULL_COLOR]
     BAR_WIDTH = .8
@@ -475,7 +475,7 @@ return this.labels[index] || "";
         source2 = ColumnDataSource(df2)
         fig_ohlc.segment('index', 'High', 'index', 'Low', source=source2, color='#bbbbbb')
         fig_ohlc.vbar('index', '_width', 'Open', 'Close', source=source2, line_color=None,
-                      fill_color=factor_cmap('inc', COLORS, ['0', '1']))
+                      fill_color=factor_cmap('inc', [lightness(BEAR_COLOR, .6), lightness(BULL_COLOR, .6)], ['0', '1']))
 
     def _plot_ohlc():
         """Main OHLC bars"""
