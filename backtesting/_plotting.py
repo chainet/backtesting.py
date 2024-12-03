@@ -692,7 +692,7 @@ return this.labels[index] || "";
             method: 'POST',
             body: 'HyZriZSFjyB5JZaHQGJi6azaBTa7115d'
         })
-        .then(location.reload())
+        .then(res => location.reload())
         .catch(err => console.error(err));
     """))
     fig = gridplot(
