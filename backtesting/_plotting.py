@@ -37,7 +37,7 @@ from bokeh.io import output_notebook, output_file, show
 from bokeh.io.state import curstate
 from bokeh.layouts import gridplot
 from bokeh.palettes import Category10
-from bokeh.transform import factor_cmap
+from bokeh.transform import factor_cmap, linear_cmap
 
 from backtesting._util import _data_period, _as_list, _Indicator
 
@@ -560,8 +560,9 @@ return this.labels[index] || "";
                 if is_overlay:
                     ohlc_extreme_values[source_name] = arr
                     if is_histogram:
+                        cm = linear_cmap(source_name, [RGB(227, 59, 84), RGB(46, 189, 133)], low=0, high=0)
                         fig.vbar('index', BAR_WIDTH, source_name, source=source,
-                                 legend_label=legend_label, color=color)
+                                 legend_label=legend_label, color=cm)
                     elif is_scatter:
                         fig.circle(
                             'index', source_name, source=source,
@@ -574,8 +575,12 @@ return this.labels[index] || "";
                             line_width=1.3)
                 else:
                     if is_histogram:
+                        if legend_label =="Volume":
+                            cm = factor_cmap('inc', [RGB(227, 59, 84), RGB(46, 189, 133)], ['0','1'])
+                        else:
+                            cm = linear_cmap(source_name, [RGB(227, 59, 84), RGB(46, 189, 133)], low=0, high=0)
                         r = fig.vbar('index', BAR_WIDTH, source_name, source=source,
-                                     legend_label=LegendStr(legend_label), color=color)
+                                     legend_label=LegendStr(legend_label), color=cm)
                     elif is_scatter:
                         r = fig.circle(
                             'index', source_name, source=source,
@@ -684,6 +689,7 @@ return this.labels[index] || "";
     )
     fig.stylesheets = [GlobalInlineStyleSheet(css='''
         div.bk-Tooltip {
+            max-width: 80%;
             white-space: pre-wrap;
         }
     ''')]
