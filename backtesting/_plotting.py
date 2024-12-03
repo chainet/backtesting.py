@@ -475,7 +475,7 @@ return this.labels[index] || "";
         source2 = ColumnDataSource(df2)
         fig_ohlc.segment('index', 'High', 'index', 'Low', source=source2, color='#bbbbbb')
         fig_ohlc.vbar('index', '_width', 'Open', 'Close', source=source2, line_color=None,
-                      fill_color=factor_cmap('inc', [lightness(BEAR_COLOR, .6), lightness(BULL_COLOR, .6)], ['0', '1']))
+                      fill_color=factor_cmap('inc', [lightness(BEAR_COLOR, .96), lightness(BULL_COLOR, .96)], ['0', '1']))
 
     def _plot_ohlc():
         """Main OHLC bars"""
