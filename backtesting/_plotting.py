@@ -474,10 +474,8 @@ return this.labels[index] || "";
         df2.index.name = None
         source2 = ColumnDataSource(df2)
         fig_ohlc.segment('index', 'High', 'index', 'Low', source=source2, color='#bbbbbb')
-        colors_lighter = [lightness(BEAR_COLOR, .92),
-                          lightness(BULL_COLOR, .92)]
         fig_ohlc.vbar('index', '_width', 'Open', 'Close', source=source2, line_color=None,
-                      fill_color=factor_cmap('inc', colors_lighter, ['0', '1']))
+                      fill_color=factor_cmap('inc', COLORS, ['0', '1']))
 
     def _plot_ohlc():
         """Main OHLC bars"""
@@ -558,7 +556,7 @@ return this.labels[index] || "";
                 if is_overlay:
                     ohlc_extreme_values[source_name] = arr
                     if is_histogram:
-                        cm = linear_cmap(source_name, [lightness(BEAR_COLOR, .68), lightness(BULL_COLOR, .68)], low=0, high=0)
+                        cm = linear_cmap(source_name, [lightness(BEAR_COLOR, .6), lightness(BULL_COLOR, .6)], low=0, high=0)
                         fig.vbar('index', BAR_WIDTH, source_name, source=source,
                                  legend_label=legend_label, color=cm)
                     elif is_scatter:
@@ -574,9 +572,9 @@ return this.labels[index] || "";
                 else:
                     if is_histogram:
                         if legend_label =="Volume":
-                            cm = factor_cmap('inc', [lightness(BEAR_COLOR, .68), lightness(BULL_COLOR, .68)], ['0','1'])
+                            cm = factor_cmap('inc', [lightness(BEAR_COLOR, .6), lightness(BULL_COLOR, .6)], ['0','1'])
                         else:
-                            cm = linear_cmap(source_name, [lightness(BEAR_COLOR, .68), lightness(BULL_COLOR, .68)], low=0, high=0)
+                            cm = linear_cmap(source_name, [lightness(BEAR_COLOR, .6), lightness(BULL_COLOR, .6)], low=0, high=0)
                         r = fig.vbar('index', BAR_WIDTH, source_name, source=source,
                                      legend_label=LegendStr(legend_label), color=cm)
                     elif is_scatter:
