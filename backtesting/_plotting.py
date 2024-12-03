@@ -473,15 +473,16 @@ return this.labels[index] || "";
         df2['inc'] = (df2.Close >= df2.Open).astype(int).astype(str)
         df2.index.name = None
         source2 = ColumnDataSource(df2)
-        fig_ohlc.segment('index', 'High', 'index', 'Low', source=source2, color='#bbbbbb')
+        cm = factor_cmap('inc', [lightness(BEAR_COLOR, .92), lightness(BULL_COLOR, .92)], ['0', '1'])
+        fig_ohlc.segment('index', 'High', 'index', 'Low', source=source2, color=cm)
         fig_ohlc.vbar('index', '_width', 'Open', 'Close', source=source2, line_color=None,
-                      fill_color=factor_cmap('inc', [lightness(BEAR_COLOR, .92), lightness(BULL_COLOR, .92)], ['0', '1']))
+                      fill_color=cm)
 
     def _plot_ohlc():
         """Main OHLC bars"""
-        fig_ohlc.segment('index', 'High', 'index', 'Low', source=source, color="black")
+        fig_ohlc.segment('index', 'High', 'index', 'Low', source=source, color=inc_cmap)
         r = fig_ohlc.vbar('index', BAR_WIDTH, 'Open', 'Close', source=source,
-                          line_color=inc_cmap, fill_color=inc_cmap)
+                          line_color=None, fill_color=inc_cmap)
         return r
 
     def _plot_ohlc_trades():
