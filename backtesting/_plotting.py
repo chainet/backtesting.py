@@ -11,10 +11,6 @@ import numpy as np
 import pandas as pd
 
 from bokeh.colors import RGB
-from bokeh.colors.named import (
-    lime as BULL_COLOR,
-    tomato as BEAR_COLOR
-)
 from bokeh.plotting import figure as _figure
 from bokeh.models import (  # type: ignore
     CrosshairTool,
@@ -182,6 +178,8 @@ def plot(*, results: pd.Series,
         filename = _windos_safe_filename(str(results._strategy))
     _bokeh_reset(filename)
 
+    BEAR_COLOR = RGB(227, 59, 84)
+    BULL_COLOR = RGB(46, 189, 133)
     COLORS = [BEAR_COLOR, BULL_COLOR]
     BAR_WIDTH = .8
 
@@ -560,7 +558,7 @@ return this.labels[index] || "";
                 if is_overlay:
                     ohlc_extreme_values[source_name] = arr
                     if is_histogram:
-                        cm = linear_cmap(source_name, [RGB(227, 59, 84), RGB(46, 189, 133)], low=0, high=0)
+                        cm = linear_cmap(source_name, [lightness(BEAR_COLOR, .68), lightness(BULL_COLOR, .68)], low=0, high=0)
                         fig.vbar('index', BAR_WIDTH, source_name, source=source,
                                  legend_label=legend_label, color=cm)
                     elif is_scatter:
@@ -576,9 +574,9 @@ return this.labels[index] || "";
                 else:
                     if is_histogram:
                         if legend_label =="Volume":
-                            cm = factor_cmap('inc', [RGB(227, 59, 84), RGB(46, 189, 133)], ['0','1'])
+                            cm = factor_cmap('inc', [lightness(BEAR_COLOR, .68), lightness(BULL_COLOR, .68)], ['0','1'])
                         else:
-                            cm = linear_cmap(source_name, [RGB(227, 59, 84), RGB(46, 189, 133)], low=0, high=0)
+                            cm = linear_cmap(source_name, [lightness(BEAR_COLOR, .68), lightness(BULL_COLOR, .68)], low=0, high=0)
                         r = fig.vbar('index', BAR_WIDTH, source_name, source=source,
                                      legend_label=LegendStr(legend_label), color=cm)
                     elif is_scatter:
