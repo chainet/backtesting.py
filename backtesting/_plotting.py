@@ -19,6 +19,8 @@ from bokeh.models import (  # type: ignore
     NumeralTickFormatter,
     Span,
     HoverTool,
+    TapTool,
+    Button,
     Range1d,
     DatetimeTickFormatter,
     WheelZoomTool,
@@ -483,6 +485,13 @@ return this.labels[index] || "";
         fig_ohlc.segment('index', 'High', 'index', 'Low', source=source, color=inc_cmap)
         r = fig_ohlc.vbar('index', BAR_WIDTH, 'Open', 'Close', source=source,
                           line_color=None, fill_color=inc_cmap)
+        fig_ohlc.add_tools(TapTool(callback=CustomJS(args=dict(source=source), code="""
+            let indices = source.selected.indices;
+            if (indices.length > 0) {
+                let index = indices[0];
+                console.log(source.data['History'][index]);
+            }
+        """)))
         return r
 
     def _plot_ohlc_trades():
@@ -676,8 +685,18 @@ return this.labels[index] || "";
     if plot_width is None:
         kwargs['sizing_mode'] = 'stretch_width'
 
+    button = Button(label="Update Data", button_type="success")
+    button.js_on_click(CustomJS(args=dict(button=button), code="""
+        button.disabled = true;
+        fetch('/update', {
+            method: 'POST',
+            body: 'HyZriZSFjyB5JZaHQGJi6azaBTa7115d'
+        })
+        .then(location.reload();)
+        .catch(err => console.error(err));
+    """))
     fig = gridplot(
-        plots,
+        [button]+plots,
         ncols=1,
         toolbar_location='right',
         toolbar_options=dict(logo=None),
