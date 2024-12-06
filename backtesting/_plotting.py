@@ -688,7 +688,8 @@ return this.labels[index] || "";
     button = Button(label="Update Data", button_type="success")
     button.js_on_click(CustomJS(args=dict(button=button), code="""
         button.disabled = true;
-        fetch('/update', {
+        name = window.location.pathname.split('/').pop();
+        fetch('/update/' + name, {
             method: 'POST',
             body: 'HyZriZSFjyB5JZaHQGJi6azaBTa7115d'
         })
