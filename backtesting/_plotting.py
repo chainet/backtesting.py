@@ -180,8 +180,8 @@ def plot(*, results: pd.Series,
         filename = _windos_safe_filename(str(results._strategy))
     _bokeh_reset(filename)
 
-    BEAR_COLOR = RGB(246, 70, 93)
-    BULL_COLOR = RGB(46, 189, 133)
+    BEAR_COLOR = RGB(46, 189, 133)
+    BULL_COLOR = RGB(246, 70, 93)
     COLORS = [BEAR_COLOR, BULL_COLOR]
     BAR_WIDTH = .8
 
@@ -197,7 +197,8 @@ def plot(*, results: pd.Series,
 
     from .lib import OHLCV_AGG
     # ohlc df may contain many columns. We're only interested in, and pass on to Bokeh, these
-    df = df[list(OHLCV_AGG.keys())+['History']].copy(deep=False)
+    # df = df[list(OHLCV_AGG.keys())+['History']].copy(deep=False)
+    df = df[list(OHLCV_AGG.keys())].copy(deep=False)
 
     # Limit data to max_candles
     if is_datetime_index:
@@ -286,7 +287,7 @@ return this.labels[index] || "";
 
         if is_datetime_index:
             formatters = {'@datetime': 'datetime'}
-            tooltips = [("Date", "@datetime{%c}")] + tooltips
+            tooltips = [("Date", "@datetime{%Y-%m-%d}")] + tooltips
         else:
             formatters = {}
             tooltips = [("#", "@index")] + tooltips
@@ -442,7 +443,7 @@ return this.labels[index] || "";
         """Superimposed, downsampled vbars"""
         time_resolution = pd.DatetimeIndex(df['datetime']).resolution
         resample_rule = (superimpose if isinstance(superimpose, str) else
-                         dict(day='M',
+                         dict(day='ME',
                               hour='D',
                               minute='h',
                               second='T',

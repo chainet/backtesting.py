@@ -154,3 +154,41 @@ class _Stats(pd.Series):
         # Prevent expansion due to _equity and _trades dfs
         with pd.option_context('max_colwidth', 20):
             return super().__repr__()
+            
+    def chinese_stats(self):
+        """将统计指标翻译为中文显示"""
+        chinese_map = {
+            'Start': '开始时间',
+            'End': '结束时间',
+            'Duration': '回测时长',
+            'Exposure Time [%]': '持仓时间占比(%)',
+            'Equity Final [$]': '最终权益($)',
+            'Equity Peak [$]': '峰值权益($)',
+            'Return [%]': '总收益率(%)',
+            'Buy & Hold Return [%]': '买入持有收益率(%)',
+            'Return (Ann.) [%]': '年化收益率(%)',
+            'Volatility (Ann.) [%]': '年化波动率(%)',
+            'Sharpe Ratio': '夏普比率',
+            'Sortino Ratio': '索提诺比率',
+            'Calmar Ratio': '卡尔玛比率',
+            'Max. Drawdown [%]': '最大回撤(%)',
+            'Avg. Drawdown [%]': '平均回撤(%)',
+            'Max. Drawdown Duration': '最长回撤周期',
+            'Avg. Drawdown Duration': '平均回撤周期',
+            '# Trades': '总交易次数',
+            'Win Rate [%]': '胜率(%)',
+            'Best Trade [%]': '最佳交易(%)',
+            'Worst Trade [%]': '最差交易(%)',
+            'Avg. Trade [%]': '平均交易收益(%)',
+            'Max. Trade Duration': '最长持仓周期',
+            'Avg. Trade Duration': '平均持仓周期',
+            'Profit Factor': '盈亏比',
+            'Expectancy [%]': '期望值(%)',
+            'SQN': '系统质量指标',
+            'Kelly Criterion': '凯利准则'
+        }
+        
+        translated = self.rename(index=chinese_map)
+        # 过滤掉以_开头的内部字段
+        translated = translated[~translated.index.str.startswith('_')]
+        return translated
